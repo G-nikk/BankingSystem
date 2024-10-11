@@ -47,8 +47,12 @@ public class User {
     @NotEmpty(message = "Заполните поле ответа на секретный вопрос!")
     private String securityAnswer;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "owner", orphanRemoval = true, cascade = CascadeType.PERSIST)
     private List<Account> accounts;
+
+    public void AddAccount(Account account) {
+        accounts.add(account);
+    }
 
     public User(String username, String firstName, String lastName, String password, String phoneNumber, String email, String securityQuestion, String securityAnswer) {
         this.username = username;

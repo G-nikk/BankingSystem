@@ -3,6 +3,7 @@ package ru.shibanov.petproject.bank.models;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.Random;
 
 @Entity
 @Table(name = "accounts")
@@ -50,8 +51,19 @@ public class Account {
         return owner;
     }
 
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setAccountNumber() {
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder();
+
+        // Первая цифра не может быть нулём
+        sb.append(random.nextInt(9) + 1); // Генерируем случайную цифру от 1 до 9
+
+        // Генерируем 10 двухзначных чисел
+        for (int i = 0; i <= 18; i++) {
+            sb.append(random.nextInt(9));
+        }
+
+        this.accountNumber = sb.toString();
     }
 
     public void setType(String type) {

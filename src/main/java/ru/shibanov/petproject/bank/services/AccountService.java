@@ -1,6 +1,8 @@
 package ru.shibanov.petproject.bank.services;
 
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.shibanov.petproject.bank.models.Account;
@@ -13,10 +15,12 @@ import java.util.List;
 @Transactional
 public class AccountService {
     private final AccountRepository accountRepository;
+    private final EntityManager entityManager;
 
     @Autowired
-    public AccountService(AccountRepository accountRepository) {
+    public AccountService(AccountRepository accountRepository, @Qualifier("entityManager") EntityManager entityManager) {
         this.accountRepository = accountRepository;
+        this.entityManager = entityManager;
     }
 
     @Transactional(readOnly = true)
