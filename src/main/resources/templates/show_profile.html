@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//:thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Пользователь</title>
+</head>
+<body>
+<p th:text="${user.getId()}"></p>
+<p th:text="${user.getFirstName()}"></p>
+<p th:text="${user.getLastName()}"></p>
+
+<a th:href="@{/bank/{id}/new-account(id=${user.getId()})}">Добавить счет</a>
+</body>
+</html>

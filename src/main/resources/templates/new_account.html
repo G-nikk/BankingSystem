@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Создать счет</title>
+</head>
+<body>
+<h1>Создать счет</h1>
+
+<form method="post" th:object="${account}">
+    <input type="hidden" name="id" th:value="${id}">
+    <label for="type">Тип счета:</label>
+    <select id="type" th:field="*{type}">
+        <option value="Текущий">Текущий</option>
+        <option value="Сберегательный">Сберегательный</option>
+        <option value="Депозитный">Депозитный</option>
+    </select>
+
+    <label for="balance">Баланс:</label>
+    <input type="number" id="balance" th:field="*{balance}">
+
+    <label for="accountNumber">Баланс:</label>
+    <input type="text" id="accountNumber" th:field="*{accountNumber}">
+
+    <button type="submit">Создать счет</button>
+</form>
+
+</body>
+</html>
