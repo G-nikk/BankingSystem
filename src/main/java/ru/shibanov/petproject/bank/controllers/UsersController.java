@@ -26,6 +26,7 @@ public class UsersController {
     @GetMapping("/{id}")
     public String showProfile(@PathVariable final long id, Model model) {
         model.addAttribute("user", userService.findById(id));
+        model.addAttribute("accounts", accountService.findByOwnerId(userService.findById(id)));
         return "show_profile";
     }
 

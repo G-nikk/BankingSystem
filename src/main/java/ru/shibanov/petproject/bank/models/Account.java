@@ -93,4 +93,7 @@ public class Account {
         this.id = id;
     }
 
+    public String getHiddenAccountNumber(){
+        return "****************" + this.accountNumber.substring(16);
+    }
 }
