@@ -1,6 +1,10 @@
 package ru.shibanov.petproject.bank.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 import java.math.BigDecimal;
 import java.util.Random;
@@ -19,6 +23,9 @@ public class Account {
     @Column(name = "type")
     private String type;
 
+    @NotNull(message = "Укажите баланс счёта!")
+    @Min(value = 0, message = "Бланс должен быть больше нуля!")
+    @Max(value = 1000000000, message = "Баланс не должен быть больше миллиарда!")
     @Column(name = "balance")
     private BigDecimal balance;
 

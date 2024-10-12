@@ -17,6 +17,7 @@
 
     <label for="balance">Баланс:</label>
     <input type="number" id="balance" th:field="*{balance}">
+    <div style="color: red" th:if="${#fields.hasErrors('balance')}" th:errors="*{balance}">Balance error</div>
 
     <button type="submit">Создать счет</button>
 </form>

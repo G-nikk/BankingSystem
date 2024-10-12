@@ -60,19 +60,17 @@ public class UsersController {
 
     @GetMapping("/{id}/new-account")
     public String newAccount(@PathVariable long id, Model model) {
-        Account account = new Account();
-        model.addAttribute("account", account);
+        model.addAttribute("account", new Account());
         return "new_account";
     }
 
     @PostMapping("/{id}/new-account")
-    public String newAccount(@PathVariable("id") final long id, @Valid Account account, BindingResult bindingResult) {
-        account.setOwner(userService.findById(id));
-        account.setAccountNumber();
-        account.getId();
+    public String newAccount(@PathVariable("id") final long id, @ModelAttribute("account") @Valid Account account, BindingResult bindingResult) {
         if (bindingResult.hasErrors()){
             return "new_account";
         }
+        account.setOwner(userService.findById(id));
+        account.setAccountNumber();
         accountService.save(account);
         return "redirect:/bank/"+id;
     }
