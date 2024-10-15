@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Random;
 
 @Entity
@@ -31,6 +32,12 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private User owner;
+
+    @OneToMany(mappedBy = "toAccount", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    private List<Transaction> toTransactions;
+
+    @OneToMany(mappedBy = "fromAccount", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    private List<Transaction> fromTransactions;
 
     public Account() {
     }

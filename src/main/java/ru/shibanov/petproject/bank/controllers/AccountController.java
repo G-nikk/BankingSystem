@@ -26,7 +26,4 @@ public class AccountController {
         model.addAttribute("account", accountService.findById(account_id));
         return "show_account";
     }
-
-
-
 }
