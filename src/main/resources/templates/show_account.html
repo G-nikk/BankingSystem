@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Информация о счете</title>
+</head>
+<body>
+<h1>Информация о счете</h1>
+
+<p th:text="${account.getAccountNumber()}"></p>
+<p th:text="${account.getType()}"></p>
+<p th:text="${account.getBalance()}"></p>
+</body>
+</html>

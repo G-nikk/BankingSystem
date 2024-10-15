@@ -28,6 +28,11 @@ public class AccountService {
         return accountRepository.findByOwnerId(user.getId());
     }
 
+    @Transactional(readOnly = true)
+    public Account findById(long id) {
+        return accountRepository.findById(id);
+    }
+
     @Transactional
     public void save(Account account) {
         accountRepository.save(account);

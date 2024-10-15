@@ -9,7 +9,8 @@
 <p th:text="${user.getFirstName()}"></p>
 <p th:text="${user.getLastName()}"></p>
 <div th:each="account : ${accounts}">
-    <a th:text="${account.getHiddenAccountNumber() + ': ' + account.getType() + ', ' + account.getBalance()}">счёт</a>
+    <a th:href="@{/bank/{id}/account/{accountId}(id=${user.getId()}, accountId=${account.getId()})}"
+       th:text="${account.getHiddenAccountNumber() + ': ' + account.getType() + ', ' + account.getBalance()}">счёт</a>
 </div>
 
 <a th:href="@{/bank/{id}/new-account(id=${user.getId()})}">Добавить счет</a>

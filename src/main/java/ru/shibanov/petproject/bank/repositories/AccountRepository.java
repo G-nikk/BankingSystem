@@ -10,5 +10,5 @@ import java.util.List;
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
     List<Account> findByOwnerId(long owner_id);
-
+    Account findById(long account_id);
 }
