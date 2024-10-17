@@ -2,6 +2,7 @@ package ru.shibanov.petproject.bank.models;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,7 +17,7 @@ public class Transaction {
     private LocalDateTime transactionDate;
 
     @Column(name = "amount")
-    private double amount;
+    private BigDecimal amount;
 
     @Column(name = "description")
     private String description;
@@ -25,12 +26,12 @@ public class Transaction {
     private String type;
 
     @ManyToOne
-    @JoinColumn(name = "from_account_id", referencedColumnName = "id")
-    private User fromAccount;
+    @JoinColumn(name = "from_account_number", referencedColumnName = "account_number")
+    private Account fromAccount;
 
     @ManyToOne
-    @JoinColumn(name = "to_account_id", referencedColumnName = "id")
-    private User toAccount;
+    @JoinColumn(name = "to_account_number", referencedColumnName = "account_number")
+    private Account toAccount;
 
     public Transaction() {}
 
@@ -50,11 +51,11 @@ public class Transaction {
         this.transactionDate = transactionDate;
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
@@ -74,19 +75,19 @@ public class Transaction {
         this.type = type;
     }
 
-    public User getFromAccount() {
-        return fromAccount;
-    }
-
-    public void setFromAccount(User fromAccount) {
-        this.fromAccount = fromAccount;
-    }
-
-    public User getToAccount() {
+    public Account getToAccount() {
         return toAccount;
     }
 
-    public void setToAccount(User toAccount) {
+    public void setToAccount(Account toAccount) {
         this.toAccount = toAccount;
+    }
+
+    public Account getFromAccount() {
+        return fromAccount;
+    }
+
+    public void setFromAccount(Account fromAccount) {
+        this.fromAccount = fromAccount;
     }
 }

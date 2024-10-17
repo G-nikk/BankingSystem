@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Random;
 
@@ -18,7 +19,7 @@ public class Account {
     private long id;
 
     @Column(name = "account_number")
-    private String accountNumber;
+    private BigInteger accountNumber;
 
     @Column(name = "type")
     private String type;
@@ -48,7 +49,7 @@ public class Account {
         this.owner = owner;
     }
 
-    public String getAccountNumber() {
+    public BigInteger getAccountNumber() {
         return accountNumber;
     }
 
@@ -76,7 +77,7 @@ public class Account {
             sb.append(random.nextInt(9));
         }
 
-        this.accountNumber = sb.toString();
+        this.accountNumber = new BigInteger(sb.toString());
     }
 
     public void setType(String type) {
@@ -100,6 +101,7 @@ public class Account {
     }
 
     public String getHiddenAccountNumber(){
-        return "****************" + this.accountNumber.substring(16);
+        String str = this.accountNumber.toString();
+        return "****************" + this.accountNumber.toString().substring(16);
     }
 }

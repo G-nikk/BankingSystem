@@ -9,6 +9,8 @@ import ru.shibanov.petproject.bank.models.Account;
 import ru.shibanov.petproject.bank.models.User;
 import ru.shibanov.petproject.bank.repositories.AccountRepository;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 @Service
@@ -29,6 +31,11 @@ public class AccountService {
     }
 
     @Transactional(readOnly = true)
+    public Account findById(Long id) {
+        return accountRepository.findById(id).orElse(null);
+    }
+
+    @Transactional(readOnly = true)
     public Account findById(long id) {
         return accountRepository.findById(id);
     }
@@ -36,5 +43,20 @@ public class AccountService {
     @Transactional
     public void save(Account account) {
         accountRepository.save(account);
+    }
+
+    @Transactional
+    public Account findByAccountNumber(BigInteger accountNumber) {
+        return accountRepository.findByAccountNumber(accountNumber);
+    }
+
+    @Transactional
+    public void transfer(BigInteger to_accountNumber, BigInteger from_accountNumber, BigDecimal amount) {
+        Account fromAccount = findByAccountNumber(from_accountNumber);
+        Account toAccount = findByAccountNumber(to_accountNumber);
+        toAccount.setBalance(fromAccount.getBalance().add(amount));
+        fromAccount.setBalance(toAccount.getBalance().subtract(amount));
+        save(fromAccount);
+        save(toAccount);
     }
 }

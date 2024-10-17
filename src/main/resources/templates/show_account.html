@@ -10,5 +10,7 @@
 <p th:text="${account.getAccountNumber()}"></p>
 <p th:text="${account.getType()}"></p>
 <p th:text="${account.getBalance()}"></p>
+<a th:href="@{/transfer/{id}(id=${account.getId()})}" class="button">Перевести</a>
+
 </body>
 </html>

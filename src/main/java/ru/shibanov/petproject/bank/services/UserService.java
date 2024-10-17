@@ -24,8 +24,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public User findById(long id) {
-        User user = userRepository.findById(id).orElse(null);
-        return user;
+        return userRepository.findById(id).orElse(null);
     }
 
     @Transactional
