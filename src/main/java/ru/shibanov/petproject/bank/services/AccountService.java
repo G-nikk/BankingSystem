@@ -54,8 +54,8 @@ public class AccountService {
     public void transfer(BigInteger to_accountNumber, BigInteger from_accountNumber, BigDecimal amount) {
         Account fromAccount = findByAccountNumber(from_accountNumber);
         Account toAccount = findByAccountNumber(to_accountNumber);
-        toAccount.setBalance(fromAccount.getBalance().add(amount));
-        fromAccount.setBalance(toAccount.getBalance().subtract(amount));
+        toAccount.setBalance(toAccount.getBalance().add(amount));
+        fromAccount.setBalance(fromAccount.getBalance().subtract(amount));
         save(fromAccount);
         save(toAccount);
     }

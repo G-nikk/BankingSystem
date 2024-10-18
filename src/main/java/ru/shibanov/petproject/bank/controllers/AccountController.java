@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.shibanov.petproject.bank.models.Account;
 import ru.shibanov.petproject.bank.models.Transaction;
+import ru.shibanov.petproject.bank.repositories.AccountRepository;
 import ru.shibanov.petproject.bank.services.AccountService;
 import ru.shibanov.petproject.bank.services.TransactionService;
 import ru.shibanov.petproject.bank.services.UserService;
@@ -18,12 +19,14 @@ public class AccountController {
     private final AccountService accountService;
     private final UserService userService;
     private final TransactionService transactionService;
+    private final AccountRepository accountRepository;
 
     @Autowired
-    public AccountController(final AccountService accountService, final UserService userService, TransactionService transactionService) {
+    public AccountController(final AccountService accountService, final UserService userService, TransactionService transactionService, AccountRepository accountRepository) {
         this.accountService = accountService;
         this.userService = userService;
         this.transactionService = transactionService;
+        this.accountRepository = accountRepository;
     }
 
     @GetMapping("/{id}/account/{account_id}")
@@ -33,16 +36,18 @@ public class AccountController {
     }
 
     @GetMapping("/transfer/{id}")
-    public String showTransfer(@PathVariable("id") final long account_id) {
+    public String showTransfer(@ModelAttribute("transaction") final Transaction transaction) {
         return "transfer";
     }
 
     @PostMapping("/transfer/{id}")
-    public String transfer(@PathVariable("id") final long from_id, Model model, @ModelAttribute @Valid Transaction transaction, BindingResult bindingResult) {
+    public String transfer(@PathVariable("id") final long from_id, @ModelAttribute("transaction") @Valid Transaction transaction, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "transfer";
         }
-        accountService.transfer(transaction.getToAccount().getAccountNumber(), transaction.getFromAccount().getAccountNumber(), transaction.getAmount());
+        transaction.setType("Перевод");
+        transaction.setFromAccountNumber(accountRepository.findById(from_id).getAccountNumber());
+        accountService.transfer(transaction.getToAccountNumber(), transaction.getFromAccountNumber(), transaction.getAmount());
         transactionService.save(transaction);
         long owner_from_id = accountService.findById(from_id).getOwner().getId();
         return "redirect:/bank/" + owner_from_id + "/account/" + from_id;

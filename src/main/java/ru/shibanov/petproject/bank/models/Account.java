@@ -34,19 +34,7 @@ public class Account {
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private User owner;
 
-    @OneToMany(mappedBy = "toAccount", orphanRemoval = true, cascade = CascadeType.PERSIST)
-    private List<Transaction> toTransactions;
-
-    @OneToMany(mappedBy = "fromAccount", orphanRemoval = true, cascade = CascadeType.PERSIST)
-    private List<Transaction> fromTransactions;
-
     public Account() {
-    }
-
-    public Account(String type, BigDecimal balance, User owner) {
-        this.type = type;
-        this.balance = balance;
-        this.owner = owner;
     }
 
     public BigInteger getAccountNumber() {

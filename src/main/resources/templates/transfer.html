@@ -1,10 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru" xmlns:th="http//:thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Перевод</title>
 </head>
 <body>
 
+<form th:object="${transaction}" method="post">
+    <div>
+        <label for="toAccountNumber">Номер карты получателя:</label>
+        <input type="number" id="toAccountNumber" th:field="*{toAccountNumber}" required>
+    </div>
+    <div>
+        <label for="amount">Сумма:</label>
+        <input type="number" id="amount" th:field="*{amount}" required>
+    </div>
+    <div>
+        <label for="description">Описание (необязательно):</label>
+        <input type="text" id="description" th:field="*{description}">
+    </div>
+    <button type="submit">Перевести</button>
+</form>
 </body>
 </html>

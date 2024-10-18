@@ -3,6 +3,7 @@ package ru.shibanov.petproject.bank.models;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,13 +26,11 @@ public class Transaction {
     @Column(name = "type")
     private String type;
 
-    @ManyToOne
-    @JoinColumn(name = "from_account_number", referencedColumnName = "account_number")
-    private Account fromAccount;
+    @Column(name = "to_account_number")
+    private BigInteger toAccountNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "to_account_number", referencedColumnName = "account_number")
-    private Account toAccount;
+    @Column(name = "from_account_number")
+    private BigInteger fromAccountNumber;
 
     public Transaction() {}
 
@@ -75,19 +74,19 @@ public class Transaction {
         this.type = type;
     }
 
-    public Account getToAccount() {
-        return toAccount;
+    public BigInteger getFromAccountNumber() {
+        return fromAccountNumber;
     }
 
-    public void setToAccount(Account toAccount) {
-        this.toAccount = toAccount;
+    public void setFromAccountNumber(BigInteger fromAccountNumber) {
+        this.fromAccountNumber = fromAccountNumber;
     }
 
-    public Account getFromAccount() {
-        return fromAccount;
+    public BigInteger getToAccountNumber() {
+        return toAccountNumber;
     }
 
-    public void setFromAccount(Account fromAccount) {
-        this.fromAccount = fromAccount;
+    public void setToAccountNumber(BigInteger toAccountNumber) {
+        this.toAccountNumber = toAccountNumber;
     }
 }
