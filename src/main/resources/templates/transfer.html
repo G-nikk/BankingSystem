@@ -24,5 +24,8 @@
 <div style="color: red" th:if="${incorrectAmount}">
     <p>Недостаточно средств на счёте!</p>
 </div>
+<div style="color: red" th:if="${incorrectAccountNumber}">
+    <p>Счёт получателя не найден!</p>
+</div>
 </body>
 </html>

@@ -41,6 +41,7 @@ public class AccountController {
     public String showTransfer(Model model) {
         model.addAttribute("incorrectAmount", false);
         model.addAttribute("transaction", new Transaction());
+        model.addAttribute("incorrectAccountNumber", false);
         return "transfer";
     }
 
@@ -49,6 +50,10 @@ public class AccountController {
                            Model model) {
         if (accountService.findById(from_id).getBalance().compareTo(amount) == -1) {
             model.addAttribute("incorrectAmount", true);
+            return "transfer";
+        }
+        else if (accountService.findByAccountNumber(transaction.getToAccountNumber()) == null) {
+            model.addAttribute("incorrectAccountNumber", true);
             return "transfer";
         }
         transaction.setType("Перевод");
