@@ -21,5 +21,8 @@
     </div>
     <button type="submit">Перевести</button>
 </form>
+<div style="color: red" th:if="${incorrectAmount}">
+    <p>Недостаточно средств на счёте!</p>
+</div>
 </body>
 </html>

@@ -13,6 +13,8 @@ import ru.shibanov.petproject.bank.services.AccountService;
 import ru.shibanov.petproject.bank.services.TransactionService;
 import ru.shibanov.petproject.bank.services.UserService;
 
+import java.math.BigDecimal;
+
 @Controller
 @RequestMapping("/bank")
 public class AccountController {
@@ -36,13 +38,17 @@ public class AccountController {
     }
 
     @GetMapping("/transfer/{id}")
-    public String showTransfer(@ModelAttribute("transaction") final Transaction transaction) {
+    public String showTransfer(Model model) {
+        model.addAttribute("incorrectAmount", false);
+        model.addAttribute("transaction", new Transaction());
         return "transfer";
     }
 
     @PostMapping("/transfer/{id}")
-    public String transfer(@PathVariable("id") final long from_id, @ModelAttribute("transaction") @Valid Transaction transaction, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
+    public String transfer(@PathVariable("id") final long from_id, @RequestParam BigDecimal amount, @ModelAttribute("transaction") @Valid Transaction transaction,
+                           Model model) {
+        if (accountService.findById(from_id).getBalance().compareTo(amount) == -1) {
+            model.addAttribute("incorrectAmount", true);
             return "transfer";
         }
         transaction.setType("Перевод");
