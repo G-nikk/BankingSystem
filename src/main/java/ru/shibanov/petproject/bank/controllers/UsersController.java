@@ -46,15 +46,23 @@ public class UsersController {
     }
 
     @GetMapping("/login")
-    public String loginUser(@ModelAttribute User user, Model model) {
-        model.addAttribute("user", user);
+    public String loginUser(Model model) {
+        model.addAttribute("incorrectUsername", false);
+        model.addAttribute("incorrectPassword", false);
         return "login";
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
+    public String login(@RequestParam String username, @RequestParam String password,
+                        Model model) {
+        User user = userService.findByUsername(username);
+        if (user == null) {
+            model.addAttribute("incorrectUsername", true);
             return "login";
+        } else if (user.getPassword().compareTo(password) != 0) {
+            model.addAttribute("incorrectPassword", true);
+            return "login";
+        }
         long id = user.getId();
         return "redirect:/bank/"+id;
     }

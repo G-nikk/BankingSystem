@@ -8,9 +8,6 @@
 <h1>Авторизация</h1>
 
 <form th:action="@{/bank/login}" method="post">
-    <div th:if="${param.error}" class="error">
-        Неверный логин или пароль
-    </div>
     <label for="username">Имя пользователя:</label>
     <input type="text" id="username" name="username">
 
@@ -19,6 +16,13 @@
 
     <button type="submit">Войти</button>
 </form>
+
+<div style="color: red" th:if="${incorrectUsername}">
+    <p>Неверный юзернейм!</p>
+</div>
+<div style="color: red" th:if="${incorrectPassword}">
+    <p>Неверный пароль!</p>
+</div>
 
 <a th:href="@{/bank/registration}">Регистрация</a>
 </body>
