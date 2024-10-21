@@ -16,7 +16,7 @@
     </select>
 
     <label for="balance">Баланс:</label>
-    <input type="number" id="balance" th:field="*{balance}">
+    <input type="number" id="balance" th:field="*{balance}" step="0.01">
     <div style="color: red" th:if="${#fields.hasErrors('balance')}" th:errors="*{balance}">Balance error</div>
 
     <button type="submit">Создать счет</button>
