@@ -83,4 +83,10 @@ public class UsersController {
         accountService.save(account);
         return "redirect:/bank/"+id;
     }
+
+    @PostMapping("/{id}")
+    public String delete(@PathVariable("id") long id) {
+        userService.delete(id);
+        return "redirect:/bank/login";
+    }
 }
