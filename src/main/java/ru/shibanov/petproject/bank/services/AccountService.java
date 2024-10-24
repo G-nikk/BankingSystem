@@ -59,4 +59,9 @@ public class AccountService {
         save(fromAccount);
         save(toAccount);
     }
+
+    @Transactional
+    public void delete(long id) {
+        accountRepository.deleteById(id);
+    }
 }

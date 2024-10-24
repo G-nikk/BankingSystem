@@ -32,8 +32,9 @@ public class AccountController {
     }
 
     @GetMapping("/{id}/account/{account_id}")
-    public String showAccount(final Model model, @PathVariable("account_id") final long account_id) {
+    public String showAccount(final Model model, @PathVariable("account_id") final long account_id, @PathVariable("id") final long id) {
         model.addAttribute("account", accountService.findById(account_id));
+        model.addAttribute("user", userService.findById(id));
         return "show_account";
     }
 
@@ -62,5 +63,11 @@ public class AccountController {
         transactionService.save(transaction);
         long owner_from_id = accountService.findById(from_id).getOwner().getId();
         return "redirect:/bank/" + owner_from_id + "/account/" + from_id;
+    }
+
+    @PostMapping("/{id}/account/{account_id}")
+    public String delete(@PathVariable("account_id") final long account_id, @PathVariable("id") final long id) {
+        accountService.delete(account_id);
+        return "redirect:/bank/" + id;
     }
 }

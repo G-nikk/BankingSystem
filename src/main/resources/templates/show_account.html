@@ -11,6 +11,8 @@
 <p th:text="${account.getType()}"></p>
 <p th:text="${account.getBalance()}"></p>
 <a th:href="@{/bank/transfer/{id}(id=${account.getId()})}" class="button">Перевести</a>
-
+<form method="post" >
+    <input type="submit" value="Удалить этот счёт"/>
+</form>
 </body>
 </html>
