@@ -3,6 +3,7 @@ package ru.shibanov.petproject.bank.services;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.shibanov.petproject.bank.models.Account;
@@ -58,6 +59,16 @@ public class AccountService {
         fromAccount.setBalance(fromAccount.getBalance().subtract(amount));
         save(fromAccount);
         save(toAccount);
+    }
+
+    @Transactional
+    @Scheduled(fixedDelay = 60000)
+    public void applyInterest(){
+        List<Account> accounts = accountRepository.findByType("Сберегательный");
+        for (Account account : accounts) {
+            account.setBalance(account.getBalance().multiply(BigDecimal.valueOf(0.01)).add(account.getBalance()));
+            accountRepository.save(account);
+        }
     }
 
     @Transactional
