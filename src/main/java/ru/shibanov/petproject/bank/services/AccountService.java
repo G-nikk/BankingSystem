@@ -66,7 +66,7 @@ public class AccountService {
     public void applyInterest(){
         List<Account> accounts = accountRepository.findByType("Сберегательный");
         for (Account account : accounts) {
-            account.setBalance(account.getBalance().multiply(BigDecimal.valueOf(0.01)).add(account.getBalance()));
+            account.setBalance(account.getBalance().add(account.getBalance().multiply(BigDecimal.valueOf(0.01))));
             accountRepository.save(account);
         }
     }
