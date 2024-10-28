@@ -64,9 +64,9 @@ public class AccountService {
     @Transactional
     @Scheduled(fixedDelay = 60000)
     public void applyInterest(){
-        List<Account> accounts = accountRepository.findByType("Сберегательный");
+        List<Account> accounts = accountRepository.findByTypeLike("Сберегательный%");
         for (Account account : accounts) {
-            account.setBalance(account.getBalance().add(account.getBalance().multiply(BigDecimal.valueOf(0.01))));
+            account.setBalance(account.getBalance().add(account.getBalance().multiply(BigDecimal.valueOf(account.getInterestRate() / 100))));
             accountRepository.save(account);
         }
     }

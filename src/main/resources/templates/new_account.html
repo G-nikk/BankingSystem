@@ -11,10 +11,9 @@
     <label for="type">Тип счета:</label>
     <select id="type" th:field="*{type}">
         <option value="Текущий">Текущий</option>
-        <option value="Сберегательный">Сберегательный</option>
-        <option value="Депозитный">Депозитный</option>
+        <option value="Сберегательный 5%">Сберегательный 5%</option>
+        <option value="Сберегательный 1%">Сберегательный 1%</option>
     </select>
-
     <label for="balance">Баланс:</label>
     <input type="number" id="balance" th:field="*{balance}" step="0.01">
     <div style="color: red" th:if="${#fields.hasErrors('balance')}" th:errors="*{balance}">Balance error</div>

@@ -13,5 +13,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     List<Account> findByOwnerId(long owner_id);
     Account findById(long account_id);
     Account findByAccountNumber(BigInteger account_number);
-    List<Account> findByType(String type);
+    List<Account> findByTypeLike(String type);
 }

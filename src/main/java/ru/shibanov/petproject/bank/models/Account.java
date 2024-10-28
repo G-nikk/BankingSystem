@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Random;
 
 @Entity
@@ -29,6 +28,9 @@ public class Account {
     @Max(value = 1000000000, message = "Баланс не должен быть больше миллиарда!")
     @Column(name = "balance")
     private BigDecimal balance;
+
+    @Column(name = "interest_rate")
+    private double interestRate;
 
     @ManyToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
@@ -86,6 +88,14 @@ public class Account {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public double getInterestRate() {
+        return interestRate;
+    }
+
+    public void setInterestRate(double interestRate) {
+        this.interestRate = interestRate;
     }
 
     public String getHiddenAccountNumber(){

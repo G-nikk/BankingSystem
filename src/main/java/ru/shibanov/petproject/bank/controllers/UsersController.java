@@ -67,23 +67,6 @@ public class UsersController {
         return "redirect:/bank/"+id;
     }
 
-    @GetMapping("/{id}/new-account")
-    public String newAccount(@PathVariable long id, Model model) {
-        model.addAttribute("account", new Account());
-        return "new_account";
-    }
-
-    @PostMapping("/{id}/new-account")
-    public String newAccount(@PathVariable("id") final long id, @ModelAttribute("account") @Valid Account account, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()){
-            return "new_account";
-        }
-        account.setOwner(userService.findById(id));
-        account.setAccountNumber();
-        accountService.save(account);
-        return "redirect:/bank/"+id;
-    }
-
     @PostMapping("/{id}")
     public String delete(@PathVariable("id") long id) {
         userService.delete(id);

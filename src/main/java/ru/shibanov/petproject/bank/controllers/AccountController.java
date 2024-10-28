@@ -31,6 +31,32 @@ public class AccountController {
         this.accountRepository = accountRepository;
     }
 
+    @GetMapping("/{id}/new-account")
+    public String newAccount(@PathVariable long id, Model model) {
+        model.addAttribute("account", new Account());
+        return "new_account";
+    }
+
+    @PostMapping("/{id}/new-account")
+    public String newAccount(@PathVariable("id") final long id, @ModelAttribute("account") @Valid Account account, BindingResult bindingResult,
+                             Model model) {
+        if (bindingResult.hasErrors()){
+            return "new_account";
+        }
+
+        if (account.getType().compareTo("Сберегательный 5%") == 0) {
+            account.setInterestRate(5);
+        }
+        else if (account.getType().compareTo("Сберегательный 1%") == 0) {
+            account.setInterestRate(1);
+        }
+        else account.setInterestRate(0);
+        account.setOwner(userService.findById(id));
+        account.setAccountNumber();
+        accountService.save(account);
+        return "redirect:/bank/"+id;
+    }
+
     @GetMapping("/{id}/account/{account_id}")
     public String showAccount(final Model model, @PathVariable("account_id") final long account_id, @PathVariable("id") final long id) {
         model.addAttribute("account", accountService.findById(account_id));
