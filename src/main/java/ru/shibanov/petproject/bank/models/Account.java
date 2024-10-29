@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Entity
 @Table(name = "accounts")
@@ -28,9 +30,6 @@ public class Account {
     @Max(value = 1000000000, message = "Баланс не должен быть больше миллиарда!")
     @Column(name = "balance")
     private BigDecimal balance;
-
-    @Column(name = "interest_rate")
-    private double interestRate;
 
     @ManyToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
@@ -90,16 +89,19 @@ public class Account {
         this.id = id;
     }
 
-    public double getInterestRate() {
-        return interestRate;
-    }
-
-    public void setInterestRate(double interestRate) {
-        this.interestRate = interestRate;
-    }
-
     public String getHiddenAccountNumber(){
         String str = this.accountNumber.toString();
         return "****************" + this.accountNumber.toString().substring(16);
+    }
+
+    public static double extractInterestRate(String accountName) {
+        Pattern pattern = Pattern.compile("\\d+");
+        Matcher matcher = pattern.matcher(accountName);
+
+        if (matcher.find()) {
+            return Double.parseDouble(matcher.group());
+        } else {
+            return 0;
+        }
     }
 }

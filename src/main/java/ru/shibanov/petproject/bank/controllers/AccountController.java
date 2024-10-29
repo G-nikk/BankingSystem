@@ -43,14 +43,6 @@ public class AccountController {
         if (bindingResult.hasErrors()){
             return "new_account";
         }
-
-        if (account.getType().compareTo("Сберегательный 5%") == 0) {
-            account.setInterestRate(5);
-        }
-        else if (account.getType().compareTo("Сберегательный 1%") == 0) {
-            account.setInterestRate(1);
-        }
-        else account.setInterestRate(0);
         account.setOwner(userService.findById(id));
         account.setAccountNumber();
         accountService.save(account);
