@@ -11,6 +11,24 @@
 <p th:text="${account.getType()}"></p>
 <p th:text="${account.getBalance()}"></p>
 <a th:href="@{/bank/transfer/{id}(id=${account.getId()})}" class="button">Перевести</a>
+
+<h2>Списания:</h2>
+<ul th:if="${debiting_transactions != null}">
+    <li th:each="transaction : ${debiting_transactions}">
+        <p th:text="${transaction.getTransactionDate()}"></p>
+        <p th:text="${transaction.getAmount()}"></p>
+        <p th:text="${transaction.getDescription()}"></p>
+    </li>
+</ul>
+
+<h2>Пополнения:</h2>
+<ul th:if="${adding_transactions != null}">
+    <li th:each="transaction : ${adding_transactions}">
+        <p th:text="${transaction.getTransactionDate()}"></p>
+        <p th:text="${transaction.getAmount()}"></p>
+        <p th:text="${transaction.getDescription()}"></p>
+    </li>
+</ul>
 <form method="post" >
     <input type="submit" value="Удалить этот счёт"/>
 </form>

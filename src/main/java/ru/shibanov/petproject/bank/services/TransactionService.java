@@ -6,6 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.shibanov.petproject.bank.models.Transaction;
 import ru.shibanov.petproject.bank.repositories.TransactionRepository;
 
+import java.math.BigInteger;
+import java.util.List;
+
 @Service
 public class TransactionService {
     private TransactionRepository transactionRepository;
@@ -18,5 +21,15 @@ public class TransactionService {
     @Transactional
     public Transaction save(Transaction transaction) {
         return transactionRepository.save(transaction);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Transaction> findAddingTransactions(BigInteger toAccountNumber) {
+        return transactionRepository.findAllByToAccountNumberOrderByTransactionDate(toAccountNumber);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Transaction> findDebitingTransactions(BigInteger fromAccountNumber) {
+        return transactionRepository.findByFromAccountNumberOrderByTransactionDate(fromAccountNumber);
     }
 }

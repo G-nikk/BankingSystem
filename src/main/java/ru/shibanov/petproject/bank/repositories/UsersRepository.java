@@ -7,7 +7,7 @@ import ru.shibanov.petproject.bank.models.User;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UsersRepository extends JpaRepository<User, Long> {
     List<User> findByFirstName(String username);
     User findByUsername(String username);
 }

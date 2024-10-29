@@ -90,7 +90,6 @@ public class Account {
     }
 
     public String getHiddenAccountNumber(){
-        String str = this.accountNumber.toString();
         return "****************" + this.accountNumber.toString().substring(16);
     }
 

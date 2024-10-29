@@ -17,14 +17,14 @@ import java.math.BigDecimal;
 
 @Controller
 @RequestMapping("/bank")
-public class AccountController {
+public class AccountsController {
     private final AccountService accountService;
     private final UserService userService;
     private final TransactionService transactionService;
     private final AccountRepository accountRepository;
 
     @Autowired
-    public AccountController(final AccountService accountService, final UserService userService, TransactionService transactionService, AccountRepository accountRepository) {
+    public AccountsController(final AccountService accountService, final UserService userService, TransactionService transactionService, AccountRepository accountRepository) {
         this.accountService = accountService;
         this.userService = userService;
         this.transactionService = transactionService;
@@ -53,6 +53,8 @@ public class AccountController {
     public String showAccount(final Model model, @PathVariable("account_id") final long account_id, @PathVariable("id") final long id) {
         model.addAttribute("account", accountService.findById(account_id));
         model.addAttribute("user", userService.findById(id));
+        model.addAttribute("debiting_transactions", transactionService.findDebitingTransactions(accountService.findById(account_id).getAccountNumber()));
+        model.addAttribute("adding_transactions", transactionService.findAddingTransactions(accountService.findById(account_id).getAccountNumber()));
         return "show_account";
     }
 
