@@ -1,6 +1,8 @@
 package ru.shibanov.petproject.bank.services;
 
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.shibanov.petproject.bank.models.User;
@@ -11,9 +13,12 @@ import java.util.List;
 @Transactional
 public class UserService {
     private final UsersRepository usersRepository;
+    private final EntityManager entityManager;
+
     @Autowired
-    public UserService(UsersRepository usersRepository) {
+    public UserService(UsersRepository usersRepository, @Qualifier("entityManager") EntityManager entityManager) {
         this.usersRepository = usersRepository;
+        this.entityManager = entityManager;
     }
 
     @Transactional(readOnly = true)
@@ -27,9 +32,17 @@ public class UserService {
     }
 
     @Transactional
-    public User save (User user) {
+    public User save(User user) {
         usersRepository.save(user);
         return user;
+    }
+
+    @Transactional
+    public void edit(User userToEdit, User userFromEdit) {
+        userToEdit.setUsername(userFromEdit.getUsername());
+        userToEdit.setFirstName(userFromEdit.getFirstName());
+        userToEdit.setLastName(userFromEdit.getLastName());
+        usersRepository.save(userToEdit);
     }
 
     @Transactional(readOnly = true)

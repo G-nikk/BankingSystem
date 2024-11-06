@@ -12,6 +12,9 @@
     <a th:href="@{/bank/{id}/account/{accountId}(id=${user.getId()}, accountId=${account.getId()})}"
        th:text="${account.getHiddenAccountNumber() + ': ' + account.getType() + ', ' + account.getBalance()}">счёт</a>
 </div>
+<div>
+    <a th:href="@{/bank/{id}/edit(id=${user.getId()})}">Редактировать профиль</a>
+</div>
 
 <a th:href="@{/bank/{id}/new-account(id=${user.getId()})}">Добавить счет</a>
 <form method="post" >
